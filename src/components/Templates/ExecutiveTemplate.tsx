@@ -1,5 +1,6 @@
-import React, { useState, useEffect } from 'react';
+import React, { useCallback, useMemo } from 'react';
 import { CVData } from '../../types';
+import { formatDate, getLanguageLevelText } from '../../lib/utils';
 import { MapPinIcon, PhoneIcon, EnvelopeIcon, GlobeAltIcon } from '@heroicons/react/24/outline';
 
 interface ExecutiveTemplateProps {
@@ -7,25 +8,6 @@ interface ExecutiveTemplateProps {
 }
 
 export const ExecutiveTemplate: React.FC<ExecutiveTemplateProps> = ({ cv }) => {
-  const formatDate = (dateString: string) => {
-    const [formatted, setFormatted] = useState('');
-    useEffect(() => {
-      if (!dateString) return setFormatted('');
-      setFormatted(new Date(dateString).toLocaleDateString('ar-SA', { year: 'numeric', month: 'long' }));
-    }, [dateString]);
-    return formatted;
-  };
-
-  const getLanguageLevelText = useCallback((level: string) => {
-    switch (level) {
-      case 'basic': return 'أساسي';
-      case 'conversational': return 'محادثة';
-      case 'fluent': return 'طلاقة';
-      case 'native': return 'لغة أم';
-      default: return 'متوسط';
-    }
-  }, []);
-
   const experienceList = useMemo(() => cv.experience.map((exp) => (
     <div key={exp.id} className="bg-gray-50 p-6 rounded-lg shadow-sm">
       <div className="flex justify-between items-start mb-4">

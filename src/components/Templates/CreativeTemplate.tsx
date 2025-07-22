@@ -1,5 +1,6 @@
-import React, { useState, useEffect } from 'react';
+import React, { useCallback, useMemo } from 'react';
 import { CVData } from '../../types';
+import { formatDate, getSkillLevelWidth } from '../../lib/utils';
 import { MapPinIcon, PhoneIcon, EnvelopeIcon, GlobeAltIcon } from '@heroicons/react/24/outline';
 
 interface CreativeTemplateProps {
@@ -7,25 +8,6 @@ interface CreativeTemplateProps {
 }
 
 export const CreativeTemplate: React.FC<CreativeTemplateProps> = ({ cv }) => {
-  const getSkillLevelWidth = useCallback((level: string) => {
-    switch (level) {
-      case 'beginner': return 'w-1/4';
-      case 'intermediate': return 'w-1/2';
-      case 'advanced': return 'w-3/4';
-      case 'expert': return 'w-full';
-      default: return 'w-1/2';
-    }
-  }, []);
-
-  const formatDate = (dateString: string) => {
-    const [formatted, setFormatted] = useState('');
-    useEffect(() => {
-      if (!dateString) return setFormatted('');
-      setFormatted(new Date(dateString).toLocaleDateString('ar-SA', { year: 'numeric', month: 'long' }));
-    }, [dateString]);
-    return formatted;
-  };
-
   const experienceList = useMemo(() => cv.experience.map((exp, index) => (
     <div key={exp.id} className="relative pl-6">
       <div className={`absolute right-0 top-2 w-3 h-3 rounded-full ${
