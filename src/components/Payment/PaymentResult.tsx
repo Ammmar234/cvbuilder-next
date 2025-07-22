@@ -1,15 +1,6 @@
 "use client";
 // DEPRECATED: Use pages/payment/result.tsx in Next.js migration
-// import { useNavigate } from 'react-router-dom';
-// This file is no longer used. See pages/payment/result.tsx
 import React, { useEffect, useState } from 'react';
-import { toast } from 'react-hot-toast';
-import { 
-  CheckCircleIcon, 
-  XCircleIcon, 
-  ArrowPathIcon,
-  HomeIcon 
-} from '@heroicons/react/24/outline';
 import { verifyZainCashPayment } from '../../lib/zaincash';
 
 export const PaymentResult: React.FC = () => {

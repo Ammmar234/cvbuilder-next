@@ -1,4 +1,4 @@
-import React, { useMemo, useCallback } from 'react';
+import React, { useCallback, useMemo } from 'react';
 import { CVData } from '../../types';
 import { MapPinIcon, PhoneIcon, EnvelopeIcon, GlobeAltIcon } from '@heroicons/react/24/outline';
 
@@ -33,65 +33,73 @@ export const ModernArabicTemplate: React.FC<ModernArabicTemplateProps> = ({ cv }
     return date.toLocaleDateString('ar-SA', { year: 'numeric', month: 'long' });
   }, []);
 
-  const experienceList = useMemo(() => cv.experience.map((exp) => (
-    <div key={exp.id} className="relative">
-      <div className="flex flex-col sm:flex-row justify-between items-start mb-2">
-        <div>
-          <h3 className="text-lg font-semibold text-gray-900">{exp.position}</h3>
-          <p className="text-blue-600 font-medium">{exp.company}</p>
+  const experienceList = useMemo(() => (
+    cv.experience.map((exp) => (
+      <div key={exp.id} className="relative">
+        <div className="flex flex-col sm:flex-row justify-between items-start mb-2">
+          <div>
+            <h3 className="text-lg font-semibold text-gray-900">{exp.position}</h3>
+            <p className="text-blue-600 font-medium">{exp.company}</p>
+          </div>
+          <div className="text-right text-sm text-gray-500 mt-2 sm:mt-0">
+            <p>{exp.location}</p>
+            <p>
+              {formatDate(exp.start_date)} - {exp.current ? 'حتى الآن' : formatDate(exp.end_date)}
+            </p>
+          </div>
         </div>
-        <div className="text-right text-sm text-gray-500 mt-2 sm:mt-0">
-          <p>{exp.location}</p>
-          <p>
-            {formatDate(exp.start_date)} - {exp.current ? 'حتى الآن' : formatDate(exp.end_date)}
-          </p>
-        </div>
+        <p className="text-gray-700 leading-relaxed">{exp.description}</p>
       </div>
-      <p className="text-gray-700 leading-relaxed">{exp.description}</p>
-    </div>
-  )), [cv.experience, formatDate]);
+    ))
+  ), [cv.experience, formatDate]);
 
-  const educationList = useMemo(() => cv.education.map((edu) => (
-    <div key={edu.id} className="relative">
-      <div className="flex flex-col sm:flex-row justify-between items-start mb-2">
-        <div>
-          <h3 className="text-lg font-semibold text-gray-900">{edu.degree}</h3>
-          <p className="text-blue-600 font-medium">{edu.institution}</p>
+  const educationList = useMemo(() => (
+    cv.education.map((edu) => (
+      <div key={edu.id} className="relative">
+        <div className="flex flex-col sm:flex-row justify-between items-start mb-2">
+          <div>
+            <h3 className="text-lg font-semibold text-gray-900">{edu.degree}</h3>
+            <p className="text-blue-600 font-medium">{edu.institution}</p>
+          </div>
+          <div className="text-right text-sm text-gray-500 mt-2 sm:mt-0">
+            <p>{edu.location}</p>
+            <p>
+              {formatDate(edu.start_date)} - {formatDate(edu.end_date)}
+            </p>
+            {edu.gpa && <p>المعدل: {edu.gpa}</p>}
+          </div>
         </div>
-        <div className="text-right text-sm text-gray-500 mt-2 sm:mt-0">
-          <p>{edu.location}</p>
-          <p>
-            {formatDate(edu.start_date)} - {formatDate(edu.end_date)}
-          </p>
-          {edu.gpa && <p>المعدل: {edu.gpa}</p>}
+        {edu.description && (
+          <p className="text-gray-700 leading-relaxed">{edu.description}</p>
+        )}
+      </div>
+    ))
+  ), [cv.education, formatDate]);
+
+  const skillsList = useMemo(() => (
+    cv.skills.map((skill) => (
+      <div key={skill.id}>
+        <div className="flex justify-between items-center mb-1">
+          <span className="text-gray-900 font-medium">{skill.name}</span>
+          <span className="text-sm text-gray-500 capitalize">{skill.level}</span>
+        </div>
+        <div className="w-full bg-gray-200 rounded-full h-2">
+          <div
+            className={`bg-blue-600 h-2 rounded-full transition-all duration-300 ${getSkillLevelWidth(skill.level)}`}
+          />
         </div>
       </div>
-      {edu.description && (
-        <p className="text-gray-700 leading-relaxed">{edu.description}</p>
-      )}
-    </div>
-  )), [cv.education, formatDate]);
+    ))
+  ), [cv.skills, getSkillLevelWidth]);
 
-  const skillsList = useMemo(() => cv.skills.map((skill) => (
-    <div key={skill.id}>
-      <div className="flex justify-between items-center mb-1">
-        <span className="text-gray-900 font-medium">{skill.name}</span>
-        <span className="text-sm text-gray-500 capitalize">{skill.level}</span>
+  const languagesList = useMemo(() => (
+    cv.languages.map((lang) => (
+      <div key={lang.id} className="flex justify-between items-center">
+        <span className="text-gray-900 font-medium">{lang.name}</span>
+        <span className="text-sm text-gray-500">{getLanguageLevelText(lang.level)}</span>
       </div>
-      <div className="w-full bg-gray-200 rounded-full h-2">
-        <div
-          className={`bg-blue-600 h-2 rounded-full transition-all duration-300 ${getSkillLevelWidth(skill.level)}`}
-        />
-      </div>
-    </div>
-  )), [cv.skills, getSkillLevelWidth]);
-
-  const languagesList = useMemo(() => cv.languages.map((lang) => (
-    <div key={lang.id} className="flex justify-between items-center">
-      <span className="text-gray-900 font-medium">{lang.name}</span>
-      <span className="text-sm text-gray-500">{getLanguageLevelText(lang.level)}</span>
-    </div>
-  )), [cv.languages, getLanguageLevelText]);
+    ))
+  ), [cv.languages, getLanguageLevelText]);
 
   return (
     <div className="max-w-[210mm] mx-auto bg-white shadow-lg min-h-[297mm] px-2 sm:px-8">

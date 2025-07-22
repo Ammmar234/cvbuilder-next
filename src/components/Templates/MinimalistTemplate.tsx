@@ -1,4 +1,4 @@
-import React, { useMemo, useCallback } from 'react';
+import React from 'react';
 import { CVData } from '../../types';
 
 interface MinimalistTemplateProps {
@@ -6,13 +6,13 @@ interface MinimalistTemplateProps {
 }
 
 export const MinimalistTemplate: React.FC<MinimalistTemplateProps> = ({ cv }) => {
-  const formatDate = useCallback((dateString: string) => {
+  const formatDate = (dateString: string) => {
     if (!dateString) return '';
     const date = new Date(dateString);
     return date.toLocaleDateString('ar-SA', { year: 'numeric', month: 'short' });
-  }, []);
+  };
 
-  const getLanguageLevelText = useCallback((level: string) => {
+  const getLanguageLevelText = (level: string) => {
     switch (level) {
       case 'basic': return 'أساسي';
       case 'conversational': return 'محادثة';
@@ -20,9 +20,9 @@ export const MinimalistTemplate: React.FC<MinimalistTemplateProps> = ({ cv }) =>
       case 'native': return 'لغة أم';
       default: return 'متوسط';
     }
-  }, []);
+  };
 
-  const experienceList = useMemo(() => cv.experience.map((exp) => (
+  const experienceList = cv.experience.map((exp) => (
     <div key={exp.id}>
       <div className="flex justify-between items-start mb-2">
         <div>
@@ -36,9 +36,9 @@ export const MinimalistTemplate: React.FC<MinimalistTemplateProps> = ({ cv }) =>
       </div>
       <p className="text-gray-700 text-sm leading-relaxed">{exp.description}</p>
     </div>
-  )), [cv.experience, formatDate]);
+  ));
 
-  const educationList = useMemo(() => cv.education.map((edu) => (
+  const educationList = cv.education.map((edu) => (
     <div key={edu.id}>
       <div className="flex justify-between items-start mb-1">
         <div>
@@ -51,20 +51,20 @@ export const MinimalistTemplate: React.FC<MinimalistTemplateProps> = ({ cv }) =>
         </div>
       </div>
     </div>
-  )), [cv.education, formatDate]);
+  ));
 
-  const skillsList = useMemo(() => cv.skills.map((skill) => (
+  const skillsList = cv.skills.map((skill) => (
     <div key={skill.id} className="text-sm">
       <span className="text-gray-900">{skill.name}</span>
     </div>
-  )), [cv.skills]);
+  ));
 
-  const languagesList = useMemo(() => cv.languages.map((lang) => (
+  const languagesList = cv.languages.map((lang) => (
     <div key={lang.id} className="flex justify-between text-sm">
       <span className="text-gray-900">{lang.name}</span>
       <span className="text-gray-600">{getLanguageLevelText(lang.level)}</span>
     </div>
-  )), [cv.languages, getLanguageLevelText]);
+  ));
 
   return (
     <div className="max-w-[210mm] mx-auto bg-white shadow-lg" style={{ minHeight: '297mm' }}>

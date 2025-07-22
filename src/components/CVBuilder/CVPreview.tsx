@@ -1,11 +1,11 @@
 import React, { Suspense, lazy, useMemo, memo } from 'react';
-import { templates } from '../../data/templates';
 import { usePersonalInfo } from '../../contexts/PersonalInfoContext';
 import { useEducation } from '../../contexts/EducationContext';
 import { useExperience } from '../../contexts/ExperienceContext';
 import { useSkills } from '../../contexts/SkillsContext';
 import { useLanguages } from '../../contexts/LanguagesContext';
 import { CVData } from '../../types';
+import { templates } from '../../data/templates';
 
 // Optimized lazy loading with better error handling
 const ModernArabicTemplate = lazy(() => 

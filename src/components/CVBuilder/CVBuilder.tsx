@@ -2,17 +2,19 @@
 
 import React, { useState, useMemo, useCallback, Suspense, lazy } from 'react';
 import { useAuth } from '../../contexts/AuthContext';
-import { templates } from '../../data/templates';
-import { checkUserPaymentStatus } from '../../lib/zaincash';
 import { toast } from 'react-hot-toast';
-import { DocumentArrowDownIcon, ChevronLeftIcon, ChevronRightIcon } from '@heroicons/react/24/outline';
-import { SparklesIcon } from '@heroicons/react/24/outline';
 import { usePersonalInfo } from '../../contexts/PersonalInfoContext';
 import { useEducation } from '../../contexts/EducationContext';
 import { useExperience } from '../../contexts/ExperienceContext';
 import { useSkills } from '../../contexts/SkillsContext';
 import { useLanguages } from '../../contexts/LanguagesContext';
 import { CVData } from '../../types';
+import { templates } from '../../data/templates';
+import { ChevronRightIcon } from '@heroicons/react/24/outline';
+import { ChevronLeftIcon } from '@heroicons/react/24/outline';
+import { DocumentArrowDownIcon } from '@heroicons/react/24/outline';
+import { SparklesIcon } from '@heroicons/react/24/outline';
+import { checkUserPaymentStatus } from '../../lib/zaincash';
 
 // Lazy load all components for better performance
 const TemplateSelector = lazy(() => import('./TemplateSelector').then(m => ({ default: m.TemplateSelector })));
