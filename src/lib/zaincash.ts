@@ -34,8 +34,20 @@ export const ZAINCASH_PRICING = {
   }
 };
 
+// Define the payload type for ZainCash JWT
+export interface ZainCashJWTPayload {
+  amount: number;
+  serviceType?: string;
+  msisdn?: string;
+  orderId: string;
+  redirectUrl?: string;
+  iat: number;
+  exp?: number;
+  transactionId?: string;
+}
+
 // Generate JWT token for ZainCash using proper crypto
-export const generateZainCashToken = async (payload: any): Promise<string> => {
+export const generateZainCashToken = async (payload: ZainCashJWTPayload): Promise<string> => {
   try {
     // Create proper JWT header
     const header = {

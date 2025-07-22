@@ -1,5 +1,7 @@
 // Optimized PDF export with lazy loading and performance improvements
 
+import { jsPDF } from 'jspdf';
+
 export const exportToPDF = async (
   elementId: string,
   filename: string,
@@ -103,7 +105,7 @@ export const exportToPDF = async (
 
 
 // Optimized watermark function
-export const addWatermark = (pdf: any, text: string = 'منشئ السيرة الذاتية - النسخة المجانية') => {
+export const addWatermark = (pdf: jsPDF, text: string = 'منشئ السيرة الذاتية - النسخة المجانية') => {
   const pageCount = pdf.getNumberOfPages();
   for (let i = 1; i <= pageCount; i++) {
     pdf.setPage(i);

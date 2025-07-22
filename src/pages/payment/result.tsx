@@ -9,9 +9,19 @@ const XCircleIcon = dynamic(() => import('@heroicons/react/24/outline').then(m =
 const ArrowPathIcon = dynamic(() => import('@heroicons/react/24/outline').then(m => m.ArrowPathIcon), { ssr: false });
 const HomeIcon = dynamic(() => import('@heroicons/react/24/outline').then(m => m.HomeIcon), { ssr: false });
 
+// Type for payment verification result (copied from verifyZainCashPayment return)
+type PaymentVerificationResult = {
+  success: boolean;
+  status: string;
+  transactionId: string;
+  orderId: string;
+  amount?: number;
+  message?: string;
+};
+
 export default function PaymentResult() {
   const [verificationStatus, setVerificationStatus] = useState<'loading' | 'success' | 'failed'>('loading');
-  const [paymentDetails, setPaymentDetails] = useState<any>(null);
+  const [paymentDetails, setPaymentDetails] = useState<PaymentVerificationResult | null>(null);
   const router = useRouter();
 
   useEffect(() => {
@@ -35,10 +45,14 @@ export default function PaymentResult() {
           setPaymentDetails(result);
           toast.error(result.message || 'فشل في التحقق من الدفع');
         }
-      } catch (error: any) {
+      } catch (error: unknown) {
         console.error('Payment verification error:', error);
         setVerificationStatus('failed');
-        toast.error('حدث خطأ أثناء التحقق من الدفع');
+        let message = 'حدث خطأ أثناء التحقق من الدفع';
+        if (error instanceof Error) {
+          message = error.message;
+        }
+        toast.error(message);
       }
     };
     const timer = setTimeout(verifyPayment, 2000);

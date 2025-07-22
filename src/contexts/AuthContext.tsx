@@ -7,8 +7,8 @@ import { supabase } from '../lib/supabase';
 interface AuthContextType {
   user: User | null;
   loading: boolean;
-  signUp: (email: string, password: string, fullName: string) => Promise<any>;
-  signIn: (email: string, password: string) => Promise<any>;
+  signUp: (email: string, password: string, fullName: string) => Promise<{ error?: Error }>;
+  signIn: (email: string, password: string) => Promise<{ error?: Error }>;
   signOut: () => Promise<void>;
 }
 
