@@ -7,6 +7,7 @@ import { EducationProvider } from "../contexts/EducationContext";
 import { ExperienceProvider } from "../contexts/ExperienceContext";
 import { SkillsProvider } from "../contexts/SkillsContext";
 import { LanguagesProvider } from "../contexts/LanguagesContext";
+import { Header } from '../components/Layout/Header';
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -39,6 +40,7 @@ export default function RootLayout({
               <ExperienceProvider>
                 <SkillsProvider>
                   <LanguagesProvider>
+                    <Header />
                     {children}
                   </LanguagesProvider>
                 </SkillsProvider>

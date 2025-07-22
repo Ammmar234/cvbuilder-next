@@ -286,9 +286,8 @@ select::placeholder {
   opacity: 1;
 }
 
-/* Make all input, textarea, and select text black */
-input,
-textarea,
-select {
+/* Force all input, textarea, and select text to black, overriding all other styles */
+input, textarea, select {
   color: #000 !important;
+  background-color: inherit;
 }
