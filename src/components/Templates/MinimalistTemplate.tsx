@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { CVData } from '../../types';
 
 interface MinimalistTemplateProps {
@@ -7,9 +7,12 @@ interface MinimalistTemplateProps {
 
 export const MinimalistTemplate: React.FC<MinimalistTemplateProps> = ({ cv }) => {
   const formatDate = (dateString: string) => {
-    if (!dateString) return '';
-    const date = new Date(dateString);
-    return date.toLocaleDateString('ar-SA', { year: 'numeric', month: 'short' });
+    const [formatted, setFormatted] = useState('');
+    useEffect(() => {
+      if (!dateString) return setFormatted('');
+      setFormatted(new Date(dateString).toLocaleDateString('ar-SA', { year: 'numeric', month: 'short' }));
+    }, [dateString]);
+    return formatted;
   };
 
   const getLanguageLevelText = (level: string) => {

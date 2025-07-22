@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { CVData } from '../../types';
 import { MapPinIcon, PhoneIcon, EnvelopeIcon, GlobeAltIcon } from '@heroicons/react/24/outline';
 
@@ -7,11 +7,14 @@ interface ClassicTemplateProps {
 }
 
 export const ClassicTemplate: React.FC<ClassicTemplateProps> = ({ cv }) => {
-  const formatDate = useCallback((dateString: string) => {
-    if (!dateString) return '';
-    const date = new Date(dateString);
-    return date.toLocaleDateString('ar-SA', { year: 'numeric', month: 'long' });
-  }, []);
+  const formatDate = (dateString: string) => {
+    const [formatted, setFormatted] = useState('');
+    useEffect(() => {
+      if (!dateString) return setFormatted('');
+      setFormatted(new Date(dateString).toLocaleDateString('ar-SA', { year: 'numeric', month: 'long' }));
+    }, [dateString]);
+    return formatted;
+  };
 
   const getLanguageLevelText = useCallback((level: string) => {
     switch (level) {

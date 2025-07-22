@@ -25,9 +25,10 @@ export default function PaymentResult() {
   const router = useRouter();
 
   useEffect(() => {
+    if (typeof window === 'undefined') return;
     const verifyPayment = async () => {
       try {
-        const orderInfo = localStorage.getItem('zaincash_order');
+        const orderInfo = window.localStorage.getItem('zaincash_order');
         if (!orderInfo) {
           setVerificationStatus('failed');
           return;
@@ -37,22 +38,17 @@ export default function PaymentResult() {
         if (result.success) {
           setVerificationStatus('success');
           setPaymentDetails(result);
-          localStorage.setItem('zaincash_completed', 'true');
-          localStorage.removeItem('zaincash_order');
+          window.localStorage.setItem('zaincash_completed', 'true');
+          window.localStorage.removeItem('zaincash_order');
           toast.success('تم التحقق من الدفع بنجاح!');
         } else {
           setVerificationStatus('failed');
           setPaymentDetails(result);
           toast.error(result.message || 'فشل في التحقق من الدفع');
         }
-      } catch (error: unknown) {
-        console.error('Payment verification error:', error);
+      } catch (error) {
         setVerificationStatus('failed');
-        let message = 'حدث خطأ أثناء التحقق من الدفع';
-        if (error instanceof Error) {
-          message = error.message;
-        }
-        toast.error(message);
+        toast.error('حدث خطأ أثناء التحقق من الدفع');
       }
     };
     const timer = setTimeout(verifyPayment, 2000);
@@ -96,7 +92,7 @@ export default function PaymentResult() {
                 <div className="space-y-1 text-sm text-green-800">
                   <p>رقم العملية: {paymentDetails.transactionId}</p>
                   <p>رقم الطلب: {paymentDetails.orderId}</p>
-                  <p>المبلغ: {paymentDetails.amount?.toLocaleString()} د.ع</p>
+                  <p>المبلغ: {typeof window !== 'undefined' ? paymentDetails.amount?.toLocaleString() : paymentDetails.amount} د.ع</p>
                 </div>
               </div>
             )}

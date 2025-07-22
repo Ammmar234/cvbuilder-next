@@ -1,4 +1,4 @@
-import React, { useCallback, useMemo } from 'react';
+import React, { useCallback, useMemo, useState, useEffect } from 'react';
 import { CVData } from '../../types';
 import { MapPinIcon, PhoneIcon, EnvelopeIcon, GlobeAltIcon } from '@heroicons/react/24/outline';
 
@@ -27,11 +27,14 @@ export const ModernArabicTemplate: React.FC<ModernArabicTemplateProps> = ({ cv }
     }
   }, []);
 
-  const formatDate = useCallback((dateString: string) => {
-    if (!dateString) return '';
-    const date = new Date(dateString);
-    return date.toLocaleDateString('ar-SA', { year: 'numeric', month: 'long' });
-  }, []);
+  const formatDate = (dateString: string) => {
+    const [formatted, setFormatted] = useState('');
+    useEffect(() => {
+      if (!dateString) return setFormatted('');
+      setFormatted(new Date(dateString).toLocaleDateString('ar-SA', { year: 'numeric', month: 'long' }));
+    }, [dateString]);
+    return formatted;
+  };
 
   const experienceList = useMemo(() => (
     cv.experience.map((exp) => (
