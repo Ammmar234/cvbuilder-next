@@ -3,7 +3,7 @@ import { useEducation } from '../../contexts/EducationContext';
 import { Education } from '../../types';
 import { PlusIcon, TrashIcon } from '@heroicons/react/24/outline';
 
-const MemoizedEducationItem = memo(({ education }: { education: Education }) => (
+const MemoizedEducationItem = memo(({ education, updateEducation, removeEducation }: { education: Education, updateEducation: (id: string, field: keyof Education, value: string) => void, removeEducation: (id: string) => void }) => (
   <div className="border border-gray-200 rounded-lg p-4">
     <div className="flex justify-between items-start mb-4">
       <h4 className="text-md font-medium text-gray-900">مؤهل تعليمي</h4>
@@ -24,7 +24,7 @@ const MemoizedEducationItem = memo(({ education }: { education: Education }) => 
           type="text"
           value={education.degree}
           onChange={(e) => updateEducation(education.id, 'degree', e.target.value)}
-          className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+          className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-gray-800"
           placeholder="بكالوريوس، ماجستير، دكتوراه"
         />
       </div>
@@ -37,7 +37,7 @@ const MemoizedEducationItem = memo(({ education }: { education: Education }) => 
           type="text"
           value={education.institution}
           onChange={(e) => updateEducation(education.id, 'institution', e.target.value)}
-          className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+          className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-gray-800"
           placeholder="جامعة بغداد"
         />
       </div>
@@ -50,7 +50,7 @@ const MemoizedEducationItem = memo(({ education }: { education: Education }) => 
           type="text"
           value={education.location}
           onChange={(e) => updateEducation(education.id, 'location', e.target.value)}
-          className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+          className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-gray-800"
           placeholder="بغداد، العراق"
         />
       </div>
@@ -63,7 +63,7 @@ const MemoizedEducationItem = memo(({ education }: { education: Education }) => 
           type="text"
           value={education.gpa}
           onChange={(e) => updateEducation(education.id, 'gpa', e.target.value)}
-          className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+          className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-gray-800"
           placeholder="85.0"
         />
       </div>
@@ -76,7 +76,7 @@ const MemoizedEducationItem = memo(({ education }: { education: Education }) => 
           value={education.description}
           onChange={(e) => updateEducation(education.id, 'description', e.target.value)}
           rows={3}
-          className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+          className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-gray-800"
           placeholder="أي معلومات إضافية عن دراستك..."
         />
       </div>
@@ -101,8 +101,8 @@ const EducationFormComponent: React.FC = () => {
   }, [dispatch]);
 
   const educationList = useMemo(() => state.education.map((education) => (
-    <MemoizedEducationItem key={education.id} education={education} />
-  )), [state.education, MemoizedEducationItem]);
+    <MemoizedEducationItem key={education.id} education={education} updateEducation={updateEducation} removeEducation={removeEducation} />
+  )), [state.education, updateEducation, removeEducation]);
 
   return (
     <div className="space-y-6">

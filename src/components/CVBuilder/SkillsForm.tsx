@@ -18,7 +18,7 @@ export const SkillsForm: React.FC = memo(() => {
     dispatch({ type: 'REMOVE_SKILL', payload: id });
   }, [dispatch]);
 
-  const MemoizedSkillItem = memo(({ skill }: { skill: Skill }) => (
+  const MemoizedSkillItem = memo(({ skill, updateSkill, removeSkill }: { skill: Skill, updateSkill: (id: string, field: keyof Skill, value: string) => void, removeSkill: (id: string) => void }) => (
     <div className="border border-gray-200 rounded-lg p-4">
       <div className="flex justify-between items-start mb-4">
         <h4 className="text-md font-medium text-gray-900">مهارة</h4>
@@ -39,7 +39,7 @@ export const SkillsForm: React.FC = memo(() => {
             type="text"
             value={skill.name}
             onChange={(e) => updateSkill(skill.id, 'name', e.target.value)}
-            className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+            className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-gray-800"
             placeholder="JavaScript, التصميم الجرافيكي"
           />
         </div>
@@ -51,7 +51,7 @@ export const SkillsForm: React.FC = memo(() => {
           <select
             value={skill.level}
             onChange={(e) => updateSkill(skill.id, 'level', e.target.value)}
-            className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+            className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-gray-800"
           >
             <option value="beginner">مبتدئ</option>
             <option value="intermediate">متوسط</option>
@@ -67,7 +67,7 @@ export const SkillsForm: React.FC = memo(() => {
           <select
             value={skill.category}
             onChange={(e) => updateSkill(skill.id, 'category', e.target.value)}
-            className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+            className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-gray-800"
           >
             <option value="technical">تقنية</option>
             <option value="soft">مهارات شخصية</option>
@@ -80,8 +80,8 @@ export const SkillsForm: React.FC = memo(() => {
   ));
 
   const skillList = useMemo(() => state.skills.map((skill) => (
-    <MemoizedSkillItem key={skill.id} skill={skill} />
-  )), [state.skills, MemoizedSkillItem]);
+    <MemoizedSkillItem key={skill.id} skill={skill} updateSkill={updateSkill} removeSkill={removeSkill} />
+  )), [state.skills, updateSkill, removeSkill]);
 
   return (
     <div className="space-y-6">

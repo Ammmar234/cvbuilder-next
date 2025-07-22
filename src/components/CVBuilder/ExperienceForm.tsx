@@ -18,7 +18,7 @@ export const ExperienceForm: React.FC = memo(() => {
     dispatch({ type: 'REMOVE_EXPERIENCE', payload: id });
   }, [dispatch]);
 
-  const MemoizedExperienceItem = memo(({ experience }: { experience: Experience }) => (
+  const MemoizedExperienceItem = memo(({ experience, updateExperience, removeExperience }: { experience: Experience, updateExperience: (id: string, field: keyof Experience, value: string | boolean) => void, removeExperience: (id: string) => void }) => (
     <div className="border border-gray-200 rounded-lg p-4">
       <div className="flex justify-between items-start mb-4">
         <h4 className="text-md font-medium text-gray-900">خبرة مهنية</h4>
@@ -39,7 +39,7 @@ export const ExperienceForm: React.FC = memo(() => {
             type="text"
             value={experience.position}
             onChange={(e) => updateExperience(experience.id, 'position', e.target.value)}
-            className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+            className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-gray-800"
             placeholder="مطور ويب، مصمم جرافيك"
           />
         </div>
@@ -52,7 +52,7 @@ export const ExperienceForm: React.FC = memo(() => {
             type="text"
             value={experience.company}
             onChange={(e) => updateExperience(experience.id, 'company', e.target.value)}
-            className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+            className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-gray-800"
             placeholder="شركة زين العراق"
           />
         </div>
@@ -65,7 +65,7 @@ export const ExperienceForm: React.FC = memo(() => {
             type="text"
             value={experience.location}
             onChange={(e) => updateExperience(experience.id, 'location', e.target.value)}
-            className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+            className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-gray-800"
             placeholder="بغداد، العراق"
           />
         </div>
@@ -78,7 +78,7 @@ export const ExperienceForm: React.FC = memo(() => {
             value={experience.description}
             onChange={(e) => updateExperience(experience.id, 'description', e.target.value)}
             rows={4}
-            className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+            className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-gray-800"
             placeholder="اكتب وصف للمهام والإنجازات في هذا المنصب..."
           />
         </div>
@@ -87,8 +87,8 @@ export const ExperienceForm: React.FC = memo(() => {
   ));
 
   const experienceList = useMemo(() => state.experience.map((experience) => (
-    <MemoizedExperienceItem key={experience.id} experience={experience} />
-  )), [state.experience, MemoizedExperienceItem]);
+    <MemoizedExperienceItem key={experience.id} experience={experience} updateExperience={updateExperience} removeExperience={removeExperience} />
+  )), [state.experience, updateExperience, removeExperience]);
 
   return (
     <div className="space-y-6">

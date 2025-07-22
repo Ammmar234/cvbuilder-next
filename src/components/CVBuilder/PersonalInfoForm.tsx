@@ -145,7 +145,7 @@ export const PersonalInfoForm: React.FC = memo(() => {
               value={personalInfo.full_name}
               onChange={e => handleLocalChange('full_name', e.target.value)}
               onBlur={() => handleBlur('full_name')}
-              className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+              className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-gray-800"
               placeholder="ابو حنين "
             />
           </div>
@@ -158,7 +158,7 @@ export const PersonalInfoForm: React.FC = memo(() => {
               value={personalInfo.job_title}
               onChange={e => handleLocalChange('job_title', e.target.value)}
               onBlur={() => handleBlur('job_title')}
-              className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+              className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-gray-800"
               placeholder="مثل: مطور ويب، مهندس برمجيات"
             />
           </div>
@@ -171,7 +171,7 @@ export const PersonalInfoForm: React.FC = memo(() => {
               value={personalInfo.email}
               onChange={e => handleLocalChange('email', e.target.value)}
               onBlur={() => handleBlur('email')}
-              className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+              className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-gray-800"
               placeholder="example@email.com"
             />
           </div>
@@ -184,7 +184,7 @@ export const PersonalInfoForm: React.FC = memo(() => {
               value={personalInfo.phone}
               onChange={e => handleLocalChange('phone', e.target.value)}
               onBlur={() => handleBlur('phone')}
-              className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+              className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-gray-800"
               placeholder="+964 770 123 4567"
             />
           </div>
@@ -197,7 +197,7 @@ export const PersonalInfoForm: React.FC = memo(() => {
               value={personalInfo.location}
               onChange={e => handleLocalChange('location', e.target.value)}
               onBlur={() => handleBlur('location')}
-              className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+              className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-gray-800"
               placeholder="بغداد، العراق"
             />
           </div>
@@ -210,7 +210,7 @@ export const PersonalInfoForm: React.FC = memo(() => {
               value={personalInfo.linkedin}
               onChange={e => handleLocalChange('linkedin', e.target.value)}
               onBlur={() => handleBlur('linkedin')}
-              className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+              className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-gray-800"
               placeholder="https://linkedin.com/in/yourprofile"
             />
           </div>
@@ -223,7 +223,7 @@ export const PersonalInfoForm: React.FC = memo(() => {
               value={personalInfo.website}
               onChange={e => handleLocalChange('website', e.target.value)}
               onBlur={() => handleBlur('website')}
-              className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+              className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-gray-800"
               placeholder="https://yourwebsite.com"
             />
           </div>
@@ -236,7 +236,7 @@ export const PersonalInfoForm: React.FC = memo(() => {
           onChange={handleSummaryChange}
           onBlur={handleSummaryBlur}
           rows={4}
-          className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+          className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-gray-800"
           placeholder="اكتب نبذة مختصرة عن نفسك وخبراتك المهنية..."
         />
       </div>

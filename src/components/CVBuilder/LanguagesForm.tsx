@@ -18,7 +18,7 @@ export const LanguagesForm: React.FC = memo(() => {
     dispatch({ type: 'REMOVE_LANGUAGE', payload: id });
   }, [dispatch]);
 
-  const MemoizedLanguageItem = memo(({ language }: { language: Language }) => (
+  const MemoizedLanguageItem = memo(({ language, updateLanguage, removeLanguage }: { language: Language, updateLanguage: (id: string, field: keyof Language, value: string) => void, removeLanguage: (id: string) => void }) => (
     <div className="border border-gray-200 rounded-lg p-4">
       <div className="flex justify-between items-start mb-4">
         <h4 className="text-md font-medium text-gray-900">لغة</h4>
@@ -39,7 +39,7 @@ export const LanguagesForm: React.FC = memo(() => {
             type="text"
             value={language.name}
             onChange={(e) => updateLanguage(language.id, 'name', e.target.value)}
-            className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+            className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-gray-800"
             placeholder="العربية، الإنجليزية، الفرنسية"
           />
         </div>
@@ -51,7 +51,7 @@ export const LanguagesForm: React.FC = memo(() => {
           <select
             value={language.level}
             onChange={(e) => updateLanguage(language.id, 'level', e.target.value)}
-            className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+            className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-gray-800"
           >
             <option value="basic">أساسي</option>
             <option value="conversational">محادثة</option>
@@ -64,8 +64,8 @@ export const LanguagesForm: React.FC = memo(() => {
   ));
 
   const languageList = useMemo(() => state.languages.map((language) => (
-    <MemoizedLanguageItem key={language.id} language={language} />
-  )), [state.languages, MemoizedLanguageItem]);
+    <MemoizedLanguageItem key={language.id} language={language} updateLanguage={updateLanguage} removeLanguage={removeLanguage} />
+  )), [state.languages, updateLanguage, removeLanguage]);
 
   return (
     <div className="space-y-6">
