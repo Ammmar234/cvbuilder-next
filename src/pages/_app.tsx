@@ -6,7 +6,7 @@ import { ExperienceProvider } from '../contexts/ExperienceContext';
 import { SkillsProvider } from '../contexts/SkillsContext';
 import { LanguagesProvider } from '../contexts/LanguagesContext';
 import { Toaster } from 'react-hot-toast';
-import '../index.css';
+import '../app/globals.css';
 
 export default function MyApp({ Component, pageProps }: AppProps) {
   return (
