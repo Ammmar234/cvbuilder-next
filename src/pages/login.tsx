@@ -2,11 +2,8 @@ import './login.css';
 import React, { useState, useCallback } from 'react';
 import { useAuth } from '../contexts/AuthContext';
 import { toast } from 'react-hot-toast';
-import dynamic from 'next/dynamic';
+import { EyeIcon, EyeSlashIcon } from '@heroicons/react/24/outline';
 import { useRouter } from 'next/router';
-
-const EyeIcon = dynamic(() => import('@heroicons/react/24/outline').then(mod => mod.EyeIcon));
-const EyeSlashIcon = dynamic(() => import('@heroicons/react/24/outline').then(mod => mod.EyeSlashIcon));
 
 const AuthForm: React.FC = () => {
   const [isLogin, setIsLogin] = useState(true);
