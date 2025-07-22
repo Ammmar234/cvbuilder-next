@@ -1,15 +1,12 @@
 import './login.css';
 import React, { useState, useCallback } from 'react';
 import { useAuth } from '../contexts/AuthContext';
+import { toast } from 'react-hot-toast';
 import dynamic from 'next/dynamic';
 import { useRouter } from 'next/router';
 
 const EyeIcon = dynamic(() => import('@heroicons/react/24/outline').then(mod => mod.EyeIcon));
 const EyeSlashIcon = dynamic(() => import('@heroicons/react/24/outline').then(mod => mod.EyeSlashIcon));
-let toast: typeof import('react-hot-toast').toast;
-if (typeof window !== 'undefined') {
-  import('react-hot-toast').then(mod => { toast = mod.toast; });
-}
 
 const AuthForm: React.FC = () => {
   const [isLogin, setIsLogin] = useState(true);
@@ -31,12 +28,12 @@ const AuthForm: React.FC = () => {
       if (isLogin) {
         const { error } = await signIn(formData.email, formData.password);
         if (error) throw error;
-        toast && toast.success('تم تسجيل الدخول بنجاح');
+        toast.success('تم تسجيل الدخول بنجاح');
         router.push('/');
       } else {
         const { error } = await signUp(formData.email, formData.password, formData.fullName);
         if (error) throw error;
-        toast && toast.success('تم إنشاء الحساب بنجاح');
+        toast.success('تم إنشاء الحساب بنجاح');
         router.push('/');
       }
     } catch (error: unknown) {
@@ -49,7 +46,7 @@ const AuthForm: React.FC = () => {
         );
       }
       const message = isErrorWithMessage(error) ? error.message : 'حدث خطأ ما';
-      toast && toast.error(message);
+      toast.error(message);
     } finally {
       setLoading(false);
     }
