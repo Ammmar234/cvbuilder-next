@@ -3,9 +3,18 @@
 import React, { useEffect, useState } from 'react';
 import { verifyZainCashPayment } from '../../lib/zaincash';
 
+type PaymentVerificationResult = {
+  success: boolean;
+  status: string;
+  transactionId: string;
+  orderId: string;
+  amount?: number;
+  message?: string;
+};
+
 export const PaymentResult: React.FC = () => {
   const [verificationStatus, setVerificationStatus] = useState<'loading' | 'success' | 'failed'>('loading');
-  const [paymentDetails, setPaymentDetails] = useState<any>(null);
+  const [paymentDetails, setPaymentDetails] = useState<PaymentVerificationResult | null>(null);
   // const navigate = useNavigate(); // Removed as per edit hint
 
   useEffect(() => {
@@ -37,10 +46,14 @@ export const PaymentResult: React.FC = () => {
           setPaymentDetails(result);
           toast.error(result.message || 'فشل في التحقق من الدفع');
         }
-      } catch (error: any) {
+      } catch (error: unknown) {
         console.error('Payment verification error:', error);
         setVerificationStatus('failed');
-        toast.error('حدث خطأ أثناء التحقق من الدفع');
+        let message = 'حدث خطأ أثناء التحقق من الدفع';
+        if (error instanceof Error) {
+          message = error.message;
+        }
+        toast.error(message);
       }
     };
 

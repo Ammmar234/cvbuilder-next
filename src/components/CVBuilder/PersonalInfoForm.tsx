@@ -3,6 +3,7 @@ import { usePersonalInfo } from '../../contexts/PersonalInfoContext';
 import { PersonalInfo } from '../../types';
 import { CameraIcon, TrashIcon } from '@heroicons/react/24/outline';
 import { debounce, optimizeImageUrl } from '../../lib/utils';
+import Image from 'next/image';
 
 export const PersonalInfoForm: React.FC = memo(() => {
   const { state, dispatch } = usePersonalInfo();
@@ -93,14 +94,14 @@ export const PersonalInfoForm: React.FC = memo(() => {
           <div className="flex items-center space-x-4 space-x-reverse">
             {imagePreview ? (
               <div className="relative">
-                <img
+                <Image
                   src={imagePreview}
                   alt="صورة شخصية"
-                  loading="lazy"
-                  width="96"
-                  height="96"
+                  width={96}
+                  height={96}
                   className="w-24 h-24 rounded-full object-cover border-4 border-gray-200"
                   style={{ maxWidth: 96, maxHeight: 96 }}
+                  loading="lazy"
                 />
                 <button
                   onClick={removeImage}

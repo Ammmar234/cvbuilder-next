@@ -2,7 +2,7 @@
 
 import React, { useMemo } from 'react';
 import { templates } from '../../data/templates';
-import { CheckIcon, StarIcon, LockClosedIcon } from '@heroicons/react/24/outline';
+import { CheckIcon, StarIcon, LockClosedIcon, CheckCircleIcon, HomeIcon, XCircleIcon } from '@heroicons/react/24/outline';
 import { SparklesIcon } from '@heroicons/react/24/solid';
 
 interface TemplateSelectorProps {
@@ -37,7 +37,7 @@ export const TemplateSelector: React.FC<TemplateSelectorProps> = ({
   const freeTemplates = useMemo(() => templates.filter(t => !t.premium), []);
   const premiumTemplates = useMemo(() => templates.filter(t => t.premium), []);
 
-  const TemplateCard = React.memo(({ template }: { template: typeof templates[0] }) => {
+  const TemplateCard: React.FC<{ template: typeof templates[0] }> = React.memo(({ template }) => {
     const isSelected = templateId === template.id;
     const isPremium = template.premium;
     const canUse = !isPremium || userPlan === 'premium';
@@ -118,78 +118,88 @@ export const TemplateSelector: React.FC<TemplateSelectorProps> = ({
       </div>
     );
   });
+  TemplateCard.displayName = 'TemplateCard';
 
-  return (
-    <div className="space-y-8">
-      <div className="text-center">
-        <h3 className="text-2xl font-bold text-gray-900 mb-2">اختر قالب سيرتك الذاتية</h3>
-        <p className="text-gray-600">
-          اختر من مجموعة متنوعة من القوالب المصممة خصيصاً للسوق العربي
-        </p>
-      </div>
-
-      {/* Free Templates */}
-      <div>
-        <div className="flex items-center space-x-2 space-x-reverse mb-4">
-          <h4 className="text-lg font-semibold text-gray-900">القوالب المجانية</h4>
-          <span className="bg-green-100 text-green-800 px-2 py-1 rounded text-xs font-medium">
-            مجاني
-          </span>
+  const TemplateSelectorComponent: React.FC<TemplateSelectorProps> = ({ 
+    userPlan, 
+    onUpgrade,
+    templateId,
+    setTemplateId
+  }) => {
+    return (
+      <div className="space-y-8">
+        <div className="text-center">
+          <h3 className="text-2xl font-bold text-gray-900 mb-2">اختر قالب سيرتك الذاتية</h3>
+          <p className="text-gray-600">
+            اختر من مجموعة متنوعة من القوالب المصممة خصيصاً للسوق العربي
+          </p>
         </div>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-          {freeTemplates.map((template) => (
-            <TemplateCard key={template.id} template={template} />
-          ))}
-        </div>
-      </div>
 
-      {/* Premium Templates */}
-      {premiumTemplates.length > 0 && (
+        {/* Free Templates */}
         <div>
           <div className="flex items-center space-x-2 space-x-reverse mb-4">
-            <h4 className="text-lg font-semibold text-gray-900">القوالب المميزة</h4>
-            <span className="bg-gradient-to-r from-yellow-400 to-orange-500 text-white px-2 py-1 rounded text-xs font-medium">
-              مميز
+            <h4 className="text-lg font-semibold text-gray-900">القوالب المجانية</h4>
+            <span className="bg-green-100 text-green-800 px-2 py-1 rounded text-xs font-medium">
+              مجاني
             </span>
           </div>
-          {userPlan === 'free' && (
-            <div className="mb-4 p-4 bg-gradient-to-r from-blue-50 to-indigo-50 border border-blue-200 rounded-lg">
-              <div className="flex items-center space-x-3 space-x-reverse">
-                <SparklesIcon className="w-8 h-8 text-blue-600" />
-                <div>
-                  <h5 className="font-semibold text-blue-900">احصل على القوالب المميزة</h5>
-                  <p className="text-sm text-blue-700">
-                    ترقية إلى النسخة المميزة للوصول إلى جميع القوالب والميزات الإضافية
-                  </p>
-                </div>
-                <button
-                  onClick={onUpgrade}
-                  className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors font-medium"
-                >
-                  ترقية الآن
-                </button>
-              </div>
-            </div>
-          )}
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-            {premiumTemplates.map((template) => (
+            {freeTemplates.map((template) => (
               <TemplateCard key={template.id} template={template} />
             ))}
           </div>
         </div>
-      )}
 
-      {/* Current Selection Info */}
-      {templateId && (
-        <div className="mt-6 p-4 bg-gray-50 rounded-lg">
-          <div className="flex items-center space-x-2 space-x-reverse">
-            <CheckIcon className="w-5 h-5 text-green-600" />
-            <span className="text-gray-900 font-medium">
-              القالب المحدد: {templates.find(t => t.id === templateId)?.name}
-            </span>
+        {/* Premium Templates */}
+        {premiumTemplates.length > 0 && (
+          <div>
+            <div className="flex items-center space-x-2 space-x-reverse mb-4">
+              <h4 className="text-lg font-semibold text-gray-900">القوالب المميزة</h4>
+              <span className="bg-gradient-to-r from-yellow-400 to-orange-500 text-white px-2 py-1 rounded text-xs font-medium">
+                مميز
+              </span>
+            </div>
+            {userPlan === 'free' && (
+              <div className="mb-4 p-4 bg-gradient-to-r from-blue-50 to-indigo-50 border border-blue-200 rounded-lg">
+                <div className="flex items-center space-x-3 space-x-reverse">
+                  <SparklesIcon className="w-8 h-8 text-blue-600" />
+                  <div>
+                    <h5 className="font-semibold text-blue-900">احصل على القوالب المميزة</h5>
+                    <p className="text-sm text-blue-700">
+                      ترقية إلى النسخة المميزة للوصول إلى جميع القوالب والميزات الإضافية
+                    </p>
+                  </div>
+                  <button
+                    onClick={onUpgrade}
+                    className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors font-medium"
+                  >
+                    ترقية الآن
+                  </button>
+                </div>
+              </div>
+            )}
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+              {premiumTemplates.map((template) => (
+                <TemplateCard key={template.id} template={template} />
+              ))}
+            </div>
           </div>
-        </div>
-      )}
-    </div>
-  );
+        )}
+
+        {/* Current Selection Info */}
+        {templateId && (
+          <div className="mt-6 p-4 bg-gray-50 rounded-lg">
+            <div className="flex items-center space-x-2 space-x-reverse">
+              <CheckIcon className="w-5 h-5 text-green-600" />
+              <span className="text-gray-900 font-medium">
+                القالب المحدد: {templates.find(t => t.id === templateId)?.name}
+              </span>
+            </div>
+          </div>
+        )}
+      </div>
+    );
+  };
+  TemplateSelectorComponent.displayName = 'TemplateSelector';
+  export const TemplateSelector = TemplateSelectorComponent;
 };
