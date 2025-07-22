@@ -48,8 +48,9 @@ const TemplateLoading = memo(() => (
     <span className="mr-3 text-gray-500">جاري تحميل القالب...</span>
   </div>
 ));
+TemplateLoading.displayName = 'TemplateLoading';
 
-export const CVPreview: React.FC<{ template_id?: string; title?: string; user_id?: string; }> = memo(({ template_id, title, user_id }) => {
+const CVPreviewComponent: React.FC<{ template_id?: string; title?: string; user_id?: string; }> = ({ template_id, title, user_id }) => {
   const { state: personalInfoState } = usePersonalInfo();
   const { state: educationState } = useEducation();
   const { state: experienceState } = useExperience();
@@ -106,4 +107,6 @@ export const CVPreview: React.FC<{ template_id?: string; title?: string; user_id
       </div>
     </div>
   );
-});
+};
+CVPreviewComponent.displayName = 'CVPreview';
+export const CVPreview = memo(CVPreviewComponent);

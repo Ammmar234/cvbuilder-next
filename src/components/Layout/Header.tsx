@@ -53,3 +53,5 @@ export const Header: React.FC = memo(() => {
     </header>
   );
 });
+
+Header.displayName = 'Header';

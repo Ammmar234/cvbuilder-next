@@ -32,8 +32,6 @@ export const exportToPDF = async (
       useCORS: true,
       allowTaint: true,
       backgroundColor: '#ffffff',
-      width: element.scrollWidth,
-      height: element.scrollHeight,
       scrollX: 0,
       scrollY: 0,
       logging: false, // Disable logging for performance
